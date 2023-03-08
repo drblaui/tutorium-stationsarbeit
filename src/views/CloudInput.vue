@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import { useSupabaseStore } from '@/store/supabase';
 	import { ref } from 'vue';
 	import { useRoute } from 'vue-router';
 	
@@ -18,20 +19,24 @@
 	const example = ref("");
 	const prev = String.fromCharCode(64 + ((parseInt(target.value, 36) - 9) - 1));
 	const next = String.fromCharCode(64 + ((parseInt(target.value, 36) - 9) + 1));
+	const supabase = useSupabaseStore();
 
-	function send(type: string, event: MouseEvent) {
+	async function send(type: string, event: MouseEvent) {
 		let payload = type == "strength" ? strength.value : example.value;
-		(event.currentTarget as Element)?.classList.remove("mdi-send");
-		(event.currentTarget as Element)?.classList.add("mdi-check");
-		setTimeout(() => {
-			console.log("foo");
+		if(await supabase.insert(type, payload, target.value)) {
 			console.log(event);
-			(event.target as Element)?.classList.remove("mdi-check");
-			(event.target as Element)?.classList.add("mdi-send");
-		}, 2000);
-		if(type == "strength") strength.value = "";
-		else example.value = "";
+			(event.target as Element)?.classList.remove("mdi-send");
+			(event.target as Element)?.classList.add("mdi-check");
+			setTimeout(() => {
+				(event.target as Element)?.classList.remove("mdi-check");
+				(event.target as Element)?.classList.add("mdi-send");
+			}, 2000);
+			if(type == "strength") strength.value = "";
+			else example.value = "";
+		}
 	}
+
+	
 </script>
 <template>
 	<div class="text-h1" v-if="!(target in mapping)">Nothing here.</div>

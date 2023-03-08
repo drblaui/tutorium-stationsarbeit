@@ -3,7 +3,9 @@
 <template>
   <v-app>
     <v-main>
-      <router-view :key="$route.fullPath"/>
+      <Suspense>
+        <router-view :key="$route.fullPath"/>
+      </Suspense>
     </v-main>
   </v-app>
 </template>
