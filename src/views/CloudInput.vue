@@ -6,7 +6,7 @@
   const route = useRoute();
 	let target  = ref(Array.isArray(route.params.name) ? route.params.name[0] : route.params.name);
 
-	const mapping = {
+	const mapping: {[index: string]: string} = {
 		A: "Unvorsichtigkeit unter Zeitdruck",
 		B: "Beibehalten eines einmal eingeschlagenen Weges, Unlust die Strategie zu ändern, Konservatismus im Planen",
 		C: "Fehlendes Gespür für die Dynamik eines Systems. Keine Betrachtung von relativen Werten sondern nur von absoluten Werten. Nichtverstehen von exponentiellem Verhalten.",
@@ -64,11 +64,6 @@
 					append-inner-icon="mdi-send"
 					@click:append-inner="send('example', $event)"
 					clearable/>
-			</v-col>
-		</v-row>
-		<v-row>
-			<v-col align="center" class="font-italic text-disabled">
-				(mit Enter wird abgesendet)
 			</v-col>
 		</v-row>
 		<v-row justify="space-around">
