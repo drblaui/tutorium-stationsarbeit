@@ -14,6 +14,11 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import('@/views/Home.vue'),
       },
+      {
+        path: 'input/:name',
+        name: 'Input',
+        component: () => import('@/views/CloudInput.vue'),
+      }
     ],
   },
 ]
