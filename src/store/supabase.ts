@@ -9,6 +9,14 @@ export const useSupabaseStore = defineStore({
 			let obj = type == "strength" ? {strength: data, letter: letter} : {example: data, letter: letter};
 			const { error } = await supabase.from(type + 's').insert(obj);
 			return !error;
+		},
+		async select(type:string, letter?: string) {
+			if(letter) {
+				const { data, error } = await supabase.from(type + 's').select(type).eq('letter', letter);
+				if(!error) return data;
+			}
+			const { data, error } = await supabase.from(type + 's').select(type);
+			if(!error) return data
 		}
 	}
 })

@@ -18,6 +18,18 @@ const routes = [
         path: 'input/:name',
         name: 'Input',
         component: () => import('@/views/CloudInput.vue'),
+      },
+      {
+        path: 'results',
+        name: 'Results',
+        component: () => import('@/views/Admin.vue'),
+        children: [
+          {
+            path: ':letter',
+            name: 'Result',
+            component: () => import('@/views/Admin.vue'),
+          }
+        ]
       }
     ],
   },
